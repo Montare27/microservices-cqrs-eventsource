@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "w0gQoMSt6/esmWUnaNTwV1RNu9/WTMX7VP+Jgf13lQh9khvig+Nj8zaLdjtXBrBF+kLJ+vinm/G4kK52yvlZfA==",
+  "dgSpecHash": "OoiEGTJrnq39g+3jB90dRrgza5/n7FYQNB66Dd1um1//w8gRJdFq+suP5+S7IAqCrD2jk0HC/Vb3CvkGBaTARQ==",
   "success": true,
   "projectFilePath": "D:\\WorkSpaces\\RiderProjects\\MicroservicesCourse\\SM-POST\\Post.Cmd\\Post.Cmd.Infrastructure\\Post.Cmd.Infrastructure.csproj",
   "expectedPackageFiles": [

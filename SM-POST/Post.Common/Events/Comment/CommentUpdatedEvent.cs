@@ -1,12 +1,12 @@
-namespace Post.Cmd.Api.Events.Comment;
+namespace Post.Common.Events.Comment;
 
 using CQRS.Core.Events;
 
 /// <summary>
-/// The commend added event class
+/// The comment updated event class
 /// </summary>
 /// <seealso cref="BaseEvent"/>
-public class CommendAddedEvent() : BaseEvent(nameof(CommendAddedEvent))
+public class CommentUpdatedEvent() : BaseEvent(nameof(CommentUpdatedEvent))
 {
 	/// <summary>
 	/// Gets or sets the value of the commend id
@@ -21,7 +21,7 @@ public class CommendAddedEvent() : BaseEvent(nameof(CommendAddedEvent))
 	/// </summary>
 	public string Username { get; set; } = string.Empty;
 	/// <summary>
-	/// Gets or sets the value of the comment date
+	/// Gets or sets the value of the edit date
 	/// </summary>
-	public DateTime CommentDate { get; set; }
+	public DateTime EditDate { get; set; }
 }

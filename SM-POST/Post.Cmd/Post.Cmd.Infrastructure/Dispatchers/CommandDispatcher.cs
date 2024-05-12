@@ -3,6 +3,7 @@
 using CQRS.Core.Commands;
 using CQRS.Core.Infrastructure;
 
+
 public class CommandDispatcher : ICommandDispatcher
 {
 	private readonly Dictionary<Type, Func<BaseCommand, Task>> _handlers = new();

@@ -1,4 +1,4 @@
-namespace Post.Cmd.Api.Events.Post;
+namespace Post.Common.Events.Post;
 
 using CQRS.Core.Events;
 

@@ -1,4 +1,4 @@
-namespace Post.Cmd.Api.Events.Comment;
+namespace Post.Common.Events.Comment;
 
 using CQRS.Core.Events;
 

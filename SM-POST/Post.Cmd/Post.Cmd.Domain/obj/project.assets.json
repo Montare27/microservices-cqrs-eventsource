@@ -811,7 +811,6 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "CQRS.Core >= 1.0.0",
       "Post.Common >= 1.0.0"
     ]
   },
@@ -849,9 +848,6 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\WorkSpaces\\RiderProjects\\MicroservicesCourse\\CQRS-ES\\CQRS.Core\\CQRS.Core.csproj": {
-              "projectPath": "D:\\WorkSpaces\\RiderProjects\\MicroservicesCourse\\CQRS-ES\\CQRS.Core\\CQRS.Core.csproj"
-            },
             "D:\\WorkSpaces\\RiderProjects\\MicroservicesCourse\\SM-POST\\Post.Common\\Post.Common.csproj": {
               "projectPath": "D:\\WorkSpaces\\RiderProjects\\MicroservicesCourse\\SM-POST\\Post.Common\\Post.Common.csproj"
             }
