@@ -6,7 +6,7 @@ using CQRS.Core.Events;
 /// The commend added event class
 /// </summary>
 /// <seealso cref="BaseEvent"/>
-public class CommendAddedEvent() : BaseEvent(nameof(CommendAddedEvent))
+public class CommentAddedEvent() : BaseEvent(nameof(CommentAddedEvent))
 {
 	/// <summary>
 	/// Gets or sets the value of the commend id

@@ -135,7 +135,7 @@ public class PostAggregate : AggregateRoot
 			throw new InvalidOperationException($"The value of {nameof(comment)} cannot be null or empty. Please provide a valid {nameof(comment)}!");
 		}
 		
-		RaiseEvent(new CommendAddedEvent{
+		RaiseEvent(new CommentAddedEvent{
 			Id = _id,
 			Comment = comment,
 			CommendId = Guid.NewGuid(),
@@ -148,7 +148,7 @@ public class PostAggregate : AggregateRoot
 	/// Applies CommentAddedEvent
 	/// </summary>
 	/// <param name="event"></param>
-	public void Apply(CommendAddedEvent @event)
+	public void Apply(CommentAddedEvent @event)
 	{
 		_id = @event.Id;
 		_comments.Add(@event.CommendId, new Tuple<string, string>(@event.Comment, @event.Username));

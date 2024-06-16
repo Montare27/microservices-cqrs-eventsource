@@ -6,7 +6,4 @@ using CQRS.Core.Events;
 /// The post liked event class
 /// </summary>
 /// <seealso cref="BaseEvent"/>
-public class PostLikedEvent() : BaseEvent(nameof(PostLikedEvent))
-{
-	
-}
+public class PostLikedEvent() : BaseEvent(nameof(PostLikedEvent));

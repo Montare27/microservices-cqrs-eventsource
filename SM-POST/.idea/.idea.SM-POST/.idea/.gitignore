@@ -11,3 +11,19 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+../../../CQRS.Core/bin/
+../../../CQRS.Core/obj/
+../../Post.Cmd/Post.Cmd.Api/bin/
+../../Post.Cmd/Post.Cmd.Api/obj/
+../../Post.Cmd/Post.Cmd.Domain/bin/
+../../Post.Cmd/Post.Cmd.Domain/obj/
+../../Post.Cmd/Post.Cmd.Infrastructure/bin/
+../../Post.Cmd/Post.Cmd.Infrastructure/obj/
+../../Post.Query/Post.Cmd.Api/obj/
+../../Post.Query/Post.Cmd.Api/bin/
+../../Post.Query/Post.Query.Api/bin/
+../../Post.Query/Post.Query.Api/obj/
+../../Post.Query/Post.Query.Domain/bin/
+../../Post.Query/Post.Query.Domain/obj/
+../../Post.Query/Post.Query.Infrastructure/bin/
+../../Post.Query/Post.Query.Infrastructure/obj/
