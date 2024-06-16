@@ -17,7 +17,7 @@ public class EventStoreRepository : IEventStoreRepository
 		
 		_eventStoreCollection = mongoDatabase.GetCollection<EventModel>(config.Value.Collection);
 	}
-	
+
 	public async Task SaveAsync(EventModel @event)
 	{
 		await _eventStoreCollection.InsertOneAsync(@event).ConfigureAwait(false);
@@ -29,8 +29,5 @@ public class EventStoreRepository : IEventStoreRepository
 			.Find(x => x.AggregateIdentifier.Equals(aggregateId))
 			.ToListAsync()
 			.ConfigureAwait(false);  
-		// avoids forcing the callback to be invoked on the original context or scheduler.
-		// such as improving performance and avoiding deadlocks
-		// Deadlock is when 2+ threads are blocked, each waiting for a resource that is held by another thread, leading to a program's halt.
 	}
 }
