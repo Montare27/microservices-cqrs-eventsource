@@ -1,6 +1,10 @@
+using Confluent.Kafka;
+using CQRS.Core.Consumers;
+using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using Post.Common.Events.Comment;
 using Post.Query.Domain.Repositories;
+using Post.Query.Infrastructure.Consumers;
 using Post.Query.Infrastructure.DataAccess;
 using Post.Query.Infrastructure.Handlers;
 using Post.Query.Infrastructure.Repositories;
@@ -22,6 +26,9 @@ dataContext.Database.EnsureCreated();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IEventHandler, EventHandler>();
+
+builder.Services.Configure<ConsumerConfig>(builder.Configuration.GetSection(nameof(ConsumerConfig)));
+builder.Services.AddScoped<IEventConsumer, EventConsumer>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
