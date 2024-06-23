@@ -46,7 +46,7 @@ public class EventStore(IEventStoreRepository eventStoreRepository, IEventProduc
 		List<EventModel> eventStream = await eventStoreRepository.FindByAggregateId(aggregateId);
 
 		if (eventStream == null || eventStream.Count == 0)
-			throw new ArgumentNotFoundException("Incorrect post Id provided! "+ aggregateId);
+			throw new AggregateNotFoundException("Incorrect post Id provided! "+ aggregateId);
 
 		return eventStream.OrderBy(x => x.Version)
 			.Select(x => x.EventData)

@@ -10,7 +10,7 @@ public class CommandDispatcher : ICommandDispatcher
 	
 	public void RegisterHandler<T>(Func<T, Task> handler) where T : BaseCommand
 	{
-		if(!_handlers.ContainsKey(typeof(T)))
+		if(_handlers.ContainsKey(typeof(T)))
 			throw new IndexOutOfRangeException("You cannot register the same command handler twice!");
 		
 		_handlers.Add(typeof(T), x => handler((T)x));
