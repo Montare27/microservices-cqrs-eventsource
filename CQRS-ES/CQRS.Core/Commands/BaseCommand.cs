@@ -2,7 +2,4 @@
 
 using Messages;
 
-public abstract class BaseCommand : Message
-{
-	
-}
+public abstract class BaseCommand : Message;
