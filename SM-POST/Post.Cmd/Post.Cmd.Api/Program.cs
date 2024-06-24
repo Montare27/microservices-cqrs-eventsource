@@ -41,7 +41,9 @@ builder.Services.AddScoped<IEventSourcingHandler<PostAggregate>, EventSourcingHa
 builder.Services.AddScoped<ICommandHandler, CommandHandler>();
 
 // register command handler methods
+ #pragma warning disable ASP0000
 var commandHandler = builder.Services.BuildServiceProvider().GetRequiredService<ICommandHandler>();
+ #pragma warning restore ASP0000
 var dispatcher = new CommandDispatcher();
 dispatcher.RegisterHandler<NewPostCommand>(commandHandler.HandleAsync);
 dispatcher.RegisterHandler<EditMessageCommand>(commandHandler.HandleAsync);

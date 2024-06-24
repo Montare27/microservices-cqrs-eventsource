@@ -2,7 +2,4 @@
 
 using CQRS.Core.Queries;
 
-public class FindPostByIdQuery : BaseQuery
-{
-	public Guid PostId { get; set; } = default!;
-}
+public class FindPostByIdQuery : BaseQuery;
