@@ -50,8 +50,8 @@ public class EventHandler(
 
 	public async Task On(CommentUpdatedEvent @event)
 	{
-		var comment = await commentRepository.GetByIdAsync(@event.Id);
-		if(comment == null) return;
+		var comment = await commentRepository.GetByIdAsync(@event.CommendId);
+		if (comment == null) return;
 
 		comment.Comment = @event.Comment;
 		comment.CommentDate = @event.EditDate;
@@ -60,8 +60,11 @@ public class EventHandler(
 		await commentRepository.UpdateAsync(comment);
 	}
 
-	public Task On(CommentRemovedEvent @event) => 
-		commentRepository.DeleteAsync(@event.Id);
+	public Task On(CommentRemovedEvent @event)
+	{
+		Console.WriteLine($"Remove comment: {@event.CommendId}");
+		return commentRepository.DeleteAsync(@event.CommendId);
+	}
 
 	public Task On(PostRemovedEvent @event) => 
 		postRepository.DeleteAsync(@event.Id);

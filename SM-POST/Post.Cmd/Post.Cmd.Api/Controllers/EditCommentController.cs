@@ -9,20 +9,20 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class AddCommentController(
+public class EditCommentController(
 	ILogger<AddCommentController> logger,
 	ICommandDispatcher commandDispatcher
 ) : ControllerBase
 {
-	[HttpPut("{id::guid}")]  // we are using PUT because we use already existing resource
-	public async Task<ActionResult> AddCommentAsync(Guid id, AddCommentCommand command)
+	[HttpPut("{id::guid}")]  
+	public async Task<ActionResult> EditCommentAsync(Guid id, EditCommentCommand command)
 	{
 		command.Id = id;
 		try
 		{
 			await commandDispatcher.SendAsync(command);
 			return Ok(
-				new BaseResponse("Add comment request completed successfully!")
+			new BaseResponse("Edit comment request completed successfully!")
 			);
 		}
 		catch (InvalidOperationException e)// validation error
@@ -44,7 +44,7 @@ public class AddCommentController(
 			const string SAFE_ERROR_MESSAGE = "Error while processing request to add comment!";
 			logger.LogError(e, SAFE_ERROR_MESSAGE);
 			return BadRequest( 
-			new NewPostResponse(command.Id, SAFE_ERROR_MESSAGE)
+			new NewPostResponse(command.CommentId, SAFE_ERROR_MESSAGE)
 			);
 		}
 	}

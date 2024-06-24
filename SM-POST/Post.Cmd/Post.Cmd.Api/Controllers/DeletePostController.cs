@@ -1,6 +1,6 @@
 ﻿namespace Post.Cmd.Api.Controllers;
 
-using Commands.Comment;
+using Commands.Post;
 using Common.DTOs;
 using CQRS.Core.Exceptions;
 using CQRS.Core.Infrastructure;
@@ -9,20 +9,20 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class AddCommentController(
-	ILogger<AddCommentController> logger,
+public class DeletePostController(
+	ILogger<DeletePostController> logger,
 	ICommandDispatcher commandDispatcher
 ) : ControllerBase
 {
-	[HttpPut("{id::guid}")]  // we are using PUT because we use already existing resource
-	public async Task<ActionResult> AddCommentAsync(Guid id, AddCommentCommand command)
+	[HttpDelete("{id::guid}")]  
+	public async Task<ActionResult> DeletePostRemoveCommentAsync(Guid id, DeletePostCommand command)
 	{
 		command.Id = id;
 		try
 		{
 			await commandDispatcher.SendAsync(command);
 			return Ok(
-				new BaseResponse("Add comment request completed successfully!")
+			new BaseResponse("Delete post request completed successfully!")
 			);
 		}
 		catch (InvalidOperationException e)// validation error
@@ -41,7 +41,7 @@ public class AddCommentController(
 		}
 		catch (Exception e) 
 		{
-			const string SAFE_ERROR_MESSAGE = "Error while processing request to add comment!";
+			const string SAFE_ERROR_MESSAGE = "Error while processing request to delete post!";
 			logger.LogError(e, SAFE_ERROR_MESSAGE);
 			return BadRequest( 
 			new NewPostResponse(command.Id, SAFE_ERROR_MESSAGE)
