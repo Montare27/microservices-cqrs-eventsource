@@ -12,7 +12,7 @@ public class EventProducer(IOptions<ProducerConfig> optionsConfig) : IEventProdu
 
 	public async Task ProduceAsync<T>(string topic, T @event) where T : BaseEvent
 	{
-		using var producer = new ProducerBuilder<string, string>(_config)
+		using IProducer<string, string> producer = new ProducerBuilder<string, string>(_config)
 			.SetKeySerializer(Serializers.Utf8)
 			.SetValueSerializer(Serializers.Utf8)
 			.Build();
@@ -22,9 +22,11 @@ public class EventProducer(IOptions<ProducerConfig> optionsConfig) : IEventProdu
 			Value = JsonSerializer.Serialize(@event, @event.GetType())
 		};
 
-		var deliveryResults = await producer.ProduceAsync(topic, eventMessage);
+		DeliveryResult<string, string> deliveryResults = await producer.ProduceAsync(topic, eventMessage);
 
 		if (deliveryResults.Status == PersistenceStatus.NotPersisted)
+		{
 			throw new Exception($"Could not use {@event.GetType().Name} message to topic - {topic} due to the following reason: {deliveryResults.Message}!");
+		}
 	}
 }

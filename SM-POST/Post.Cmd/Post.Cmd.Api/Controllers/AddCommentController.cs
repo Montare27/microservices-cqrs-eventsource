@@ -14,7 +14,7 @@ public class AddCommentController(
 	ICommandDispatcher commandDispatcher
 ) : ControllerBase
 {
-	[HttpPut("{id::guid}")]  // we are using PUT because we use already existing resource
+	[HttpPut("{id::guid}")]// we are using PUT because we use already existing resource
 	public async Task<ActionResult> AddCommentAsync(Guid id, AddCommentCommand command)
 	{
 		command.Id = id;
@@ -22,7 +22,7 @@ public class AddCommentController(
 		{
 			await commandDispatcher.SendAsync(command);
 			return Ok(
-				new BaseResponse("Add comment request completed successfully!")
+			new BaseResponse("Add comment request completed successfully!")
 			);
 		}
 		catch (InvalidOperationException e)// validation error
@@ -39,11 +39,11 @@ public class AddCommentController(
 			new BaseResponse(e.Message)
 			);
 		}
-		catch (Exception e) 
+		catch (Exception e)
 		{
 			const string SAFE_ERROR_MESSAGE = "Error while processing request to add comment!";
 			logger.LogError(e, SAFE_ERROR_MESSAGE);
-			return BadRequest( 
+			return BadRequest(
 			new NewPostResponse(command.Id, SAFE_ERROR_MESSAGE)
 			);
 		}

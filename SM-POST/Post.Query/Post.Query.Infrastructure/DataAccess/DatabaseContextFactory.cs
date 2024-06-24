@@ -8,7 +8,7 @@ public class DatabaseContextFactory(Action<DbContextOptionsBuilder> configureDbC
 	{
 		DbContextOptionsBuilder<DatabaseContext> optionsBuilder = new();
 		configureDbContext(optionsBuilder);
-		
-		return new DatabaseContext(optionsBuilder.Options);		
+
+		return new DatabaseContext(optionsBuilder.Options);
 	}
 }

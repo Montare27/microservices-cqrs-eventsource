@@ -1,6 +1,5 @@
 ﻿namespace CQRS.Core.Events;
 
-using Infrastructure;
 using Messages;
 
 public abstract class BaseEvent(string type) : Message

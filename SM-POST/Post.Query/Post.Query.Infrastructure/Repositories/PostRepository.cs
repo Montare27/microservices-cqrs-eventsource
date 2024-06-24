@@ -25,7 +25,10 @@ public class PostRepository(DatabaseContextFactory contextFactory) : IPostReposi
 	{
 		await using var context = contextFactory.CreateDbContext();
 		var post = await GetByIdAsync(id);
-		if(post == null) return;
+		if (post == null)
+		{
+			return;
+		}
 
 		context.Posts.Remove(post);
 		await context.SaveChangesAsync();

@@ -12,9 +12,12 @@ public class QueryHandler(IPostRepository repository) : IQueryHandler
 		return repository.ListAllAsync();
 	}
 
-	public Task<PostEntity?> HandleAsync(FindPostByIdQuery query)
+	public async Task<List<PostEntity>> HandleAsync(FindPostByIdQuery query)
 	{
-		return repository.GetByIdAsync(query.Id);
+		var post = await repository.GetByIdAsync(query.Id);
+		return post != null
+			?[post]
+			:[];
 	}
 
 	public Task<List<PostEntity>> HandleAsync(FindPostsByAuthorQuery query)

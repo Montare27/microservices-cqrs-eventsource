@@ -21,7 +21,7 @@ public class LikePostController(
 		{
 			await commandDispatcher.SendAsync(new LikePostCommand(id));
 			return Ok(
-				new BaseResponse("Like post request completed successfully!")
+			new BaseResponse("Like post request completed successfully!")
 			);
 		}
 		catch (InvalidOperationException e)// validation error
@@ -38,11 +38,11 @@ public class LikePostController(
 			new BaseResponse(e.Message)
 			);
 		}
-		catch (Exception e) 
+		catch (Exception e)
 		{
 			const string SAFE_ERROR_MESSAGE = "Error while processing request to like message!";
 			logger.LogError(e, SAFE_ERROR_MESSAGE);
-			return BadRequest( 
+			return BadRequest(
 			new NewPostResponse(id, SAFE_ERROR_MESSAGE)
 			);
 		}

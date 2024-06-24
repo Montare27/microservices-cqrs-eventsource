@@ -14,7 +14,7 @@ public class DeletePostController(
 	ICommandDispatcher commandDispatcher
 ) : ControllerBase
 {
-	[HttpDelete("{id::guid}")]  
+	[HttpDelete("{id::guid}")]
 	public async Task<ActionResult> DeletePostRemoveCommentAsync(Guid id, DeletePostCommand command)
 	{
 		command.Id = id;
@@ -39,11 +39,11 @@ public class DeletePostController(
 			new BaseResponse(e.Message)
 			);
 		}
-		catch (Exception e) 
+		catch (Exception e)
 		{
 			const string SAFE_ERROR_MESSAGE = "Error while processing request to delete post!";
 			logger.LogError(e, SAFE_ERROR_MESSAGE);
-			return BadRequest( 
+			return BadRequest(
 			new NewPostResponse(command.Id, SAFE_ERROR_MESSAGE)
 			);
 		}

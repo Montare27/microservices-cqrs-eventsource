@@ -22,22 +22,22 @@ public class NewPostController(
 			command.Id = id;
 			await commandDispatcher.SendAsync(command);
 			return StatusCode(
-				StatusCodes.Status201Created, 
-				new NewPostResponse(id, "The post creating request completed successfully!")
+			StatusCodes.Status201Created,
+			new NewPostResponse(id, "The post creating request completed successfully!")
 			);
 		}
-		catch (InvalidOperationException e) // validation error
+		catch (InvalidOperationException e)// validation error
 		{
 			logger.LogWarning(e, "Client made a bad request!");
 			return BadRequest(new BaseResponse(e.Message));
 		}
-		catch (Exception e) 
+		catch (Exception e)
 		{
 			const string SAFE_ERROR_MESSAGE = "Error while processing request to create a new post!";
 			logger.LogError(e, SAFE_ERROR_MESSAGE);
 			return StatusCode(
-				StatusCodes.Status500InternalServerError, 
-				new NewPostResponse(id, SAFE_ERROR_MESSAGE)
+			StatusCodes.Status500InternalServerError,
+			new NewPostResponse(id, SAFE_ERROR_MESSAGE)
 			);
 		}
 	}

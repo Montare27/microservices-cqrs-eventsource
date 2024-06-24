@@ -14,7 +14,7 @@ public class RemoveCommentController(
 	ICommandDispatcher commandDispatcher
 ) : ControllerBase
 {
-	[HttpDelete("{id::guid}")]  
+	[HttpDelete("{id::guid}")]
 	public async Task<ActionResult> RemoveCommentAsync(Guid id, RemoveCommentCommand command)
 	{
 		command.Id = id;
@@ -39,11 +39,11 @@ public class RemoveCommentController(
 			new BaseResponse(e.Message)
 			);
 		}
-		catch (Exception e) 
+		catch (Exception e)
 		{
 			const string SAFE_ERROR_MESSAGE = "Error while processing request to remove comment!";
 			logger.LogError(e, SAFE_ERROR_MESSAGE);
-			return BadRequest( 
+			return BadRequest(
 			new NewPostResponse(command.Id, SAFE_ERROR_MESSAGE)
 			);
 		}

@@ -14,7 +14,7 @@ public class EditCommentController(
 	ICommandDispatcher commandDispatcher
 ) : ControllerBase
 {
-	[HttpPut("{id::guid}")]  
+	[HttpPut("{id::guid}")]
 	public async Task<ActionResult> EditCommentAsync(Guid id, EditCommentCommand command)
 	{
 		command.Id = id;
@@ -39,11 +39,11 @@ public class EditCommentController(
 			new BaseResponse(e.Message)
 			);
 		}
-		catch (Exception e) 
+		catch (Exception e)
 		{
 			const string SAFE_ERROR_MESSAGE = "Error while processing request to add comment!";
 			logger.LogError(e, SAFE_ERROR_MESSAGE);
-			return BadRequest( 
+			return BadRequest(
 			new NewPostResponse(command.CommentId, SAFE_ERROR_MESSAGE)
 			);
 		}

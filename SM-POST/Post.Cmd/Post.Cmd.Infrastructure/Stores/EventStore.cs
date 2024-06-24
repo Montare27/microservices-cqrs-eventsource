@@ -6,7 +6,6 @@ using CQRS.Core.Exceptions;
 using CQRS.Core.Infrastructure;
 using CQRS.Core.Producers;
 using Domain.Aggregates;
-using System.Data;
 
 public class EventStore(IEventStoreRepository eventStoreRepository, IEventProducer eventProducer) : IEventStore
 {
@@ -15,15 +14,17 @@ public class EventStore(IEventStoreRepository eventStoreRepository, IEventProduc
 		List<EventModel> eventStream = await eventStoreRepository.FindByAggregateId(aggregateId);
 
 		if (expectedVersion != -1 && eventStream[^1].Version != expectedVersion)// ^1 means the last element
+		{
 			throw new ConcurrencyException();
+		}
 
 		int version = expectedVersion;
-		
+
 		foreach (var @event in events)
 		{
 			version++;
-			var eventType = @event.GetType().Name;
-			
+			string eventType = @event.GetType().Name;
+
 			var eventModel = new EventModel{
 				TimeStamp = DateTime.Now,
 				AggregateIdentifier = aggregateId,
@@ -36,7 +37,7 @@ public class EventStore(IEventStoreRepository eventStoreRepository, IEventProduc
 
 			await eventStoreRepository.SaveAsync(eventModel);
 
-			var topic = Environment.GetEnvironmentVariable("KAFKA_TOPIC");
+			string topic = Environment.GetEnvironmentVariable("KAFKA_TOPIC");
 			await eventProducer.ProduceAsync(topic!, @event);
 		}
 	}
@@ -46,7 +47,9 @@ public class EventStore(IEventStoreRepository eventStoreRepository, IEventProduc
 		List<EventModel> eventStream = await eventStoreRepository.FindByAggregateId(aggregateId);
 
 		if (eventStream == null || eventStream.Count == 0)
-			throw new AggregateNotFoundException("Incorrect post Id provided! "+ aggregateId);
+		{
+			throw new AggregateNotFoundException("Incorrect post Id provided! "+aggregateId);
+		}
 
 		return eventStream.OrderBy(x => x.Version)
 			.Select(x => x.EventData)

@@ -14,7 +14,7 @@ public class EventStoreRepository : IEventStoreRepository
 	{
 		var mongoClient = new MongoClient(config.Value.ConnectionString);
 		var mongoDatabase = mongoClient.GetDatabase(config.Value.Database);
-		
+
 		_eventStoreCollection = mongoDatabase.GetCollection<EventModel>(config.Value.Collection);
 	}
 
@@ -28,6 +28,6 @@ public class EventStoreRepository : IEventStoreRepository
 		return await _eventStoreCollection
 			.Find(x => x.AggregateIdentifier.Equals(aggregateId))
 			.ToListAsync()
-			.ConfigureAwait(false);  
+			.ConfigureAwait(false);
 	}
 }

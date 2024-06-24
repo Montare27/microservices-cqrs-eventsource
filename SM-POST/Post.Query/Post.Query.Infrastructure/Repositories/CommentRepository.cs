@@ -25,7 +25,10 @@ public class CommentRepository(DatabaseContextFactory contextFactory) : IComment
 	{
 		await using var context = contextFactory.CreateDbContext();
 		var comment = await GetByIdAsync(id);
-		if(comment == null) return;
+		if (comment == null)
+		{
+			return;
+		}
 		context.Comments.Remove(comment);
 		await context.SaveChangesAsync();
 	}

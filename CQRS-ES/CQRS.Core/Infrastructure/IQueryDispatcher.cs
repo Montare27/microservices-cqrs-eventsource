@@ -2,9 +2,9 @@
 
 using Queries;
 
-public interface IQueryDispatcher
+public interface IQueryDispatcher<TEntity>
 {
-	void RegisterHandler<T>(Func<T, Task> handler) where T : BaseQuery;
-	
-	Task SendAsync(BaseQuery query);
+	void RegisterHandler<TQuery>(Func<TQuery, Task<List<TEntity>>> handler) where TQuery : BaseQuery;
+
+	Task<List<TEntity>> SendAsync(BaseQuery query);
 }

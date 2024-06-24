@@ -24,7 +24,7 @@ public class CommandHandler(IEventSourcingHandler<PostAggregate> eventSourcingHa
 	{
 		var aggregate = await eventSourcingHandler.GetByIdAsync(command.Id);
 		aggregate.DeletePost(command.Username);
-		
+
 		await eventSourcingHandler.SaveAsync(aggregate);
 	}
 

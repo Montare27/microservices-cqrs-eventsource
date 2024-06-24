@@ -22,14 +22,14 @@ public class EditMessageController(
 		{
 			await commandDispatcher.SendAsync(command);
 			return Ok(
-				new BaseResponse("The edit message request completed successfully!")
+			new BaseResponse("The edit message request completed successfully!")
 			);
 		}
 		catch (InvalidOperationException e)// validation error
 		{
 			logger.LogWarning(e, "Client made a bad request!");
 			return BadRequest(
-				new BaseResponse(e.Message)
+			new BaseResponse(e.Message)
 			);
 		}
 		catch (AggregateNotFoundException e)
@@ -39,12 +39,12 @@ public class EditMessageController(
 			new BaseResponse(e.Message)
 			);
 		}
-		catch (Exception e) 
+		catch (Exception e)
 		{
 			const string SAFE_ERROR_MESSAGE = "Error while processing request to edit message!";
 			logger.LogError(e, SAFE_ERROR_MESSAGE);
-			return BadRequest( 
-				new NewPostResponse(command.Id, SAFE_ERROR_MESSAGE)
+			return BadRequest(
+			new NewPostResponse(command.Id, SAFE_ERROR_MESSAGE)
 			);
 		}
 	}

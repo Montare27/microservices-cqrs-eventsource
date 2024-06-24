@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 public class ConsumerHostedService(
 	ILogger<ConsumerHostedService> logger,
-	IServiceProvider serviceProvider  
+	IServiceProvider serviceProvider
 ) : IHostedService
 {
 
@@ -15,14 +15,14 @@ public class ConsumerHostedService(
 	{
 		logger.LogInformation("Event Consumer service running.");
 
-		using(var scope = serviceProvider.CreateScope())
+		using (var scope = serviceProvider.CreateScope())
 		{
 			var eventConsumer = scope.ServiceProvider.GetRequiredService<IEventConsumer>();
-			var topic = Environment.GetEnvironmentVariable("KAFKA_TOPIC");
+			string? topic = Environment.GetEnvironmentVariable("KAFKA_TOPIC");
 
-			Task.Run(() => eventConsumer.Consume(topic!), cancellationToken);
+			Task.Run(action: () => eventConsumer.Consume(topic!), cancellationToken);
 		}
-		
+
 		return Task.CompletedTask;
 	}
 

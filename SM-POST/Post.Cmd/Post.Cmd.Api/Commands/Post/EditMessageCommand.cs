@@ -3,13 +3,13 @@ namespace Post.Cmd.Api.Commands.Post;
 using CQRS.Core.Commands;
 
 /// <summary>
-/// The edit message command class
+///     The edit message command class
 /// </summary>
-/// <seealso cref="BaseCommand"/>
+/// <seealso cref="BaseCommand" />
 public class EditMessageCommand : BaseCommand
 {
 	/// <summary>
-	/// Gets or sets the value of the message
+	///     Gets or sets the value of the message
 	/// </summary>
 	public string Message { get; set; } = default!;
 }

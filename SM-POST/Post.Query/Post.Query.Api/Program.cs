@@ -1,14 +1,10 @@
 using Confluent.Kafka;
 using CQRS.Core.Consumers;
-using CQRS.Core.Events;
 using CQRS.Core.Infrastructure;
-using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Bson.Serialization;
-using Post.Common.Events.Comment;
-using Post.Common.Events.Post;
 using Post.Query.Api.Queries;
 using Post.Query.Api.Queries.Post;
+using Post.Query.Domain.Entities;
 using Post.Query.Domain.Repositories;
 using Post.Query.Infrastructure.Consumers;
 using Post.Query.Infrastructure.DataAccess;
@@ -19,9 +15,9 @@ using EventHandler=Post.Query.Infrastructure.Handlers.EventHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Action<DbContextOptionsBuilder> configureDbContext = o => 
-    o.UseLazyLoadingProxies()  // it helps to us to return Comments with Posts. For this purpose we need to install Proxies package
-        .UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
+Action<DbContextOptionsBuilder> configureDbContext = o =>
+	o.UseLazyLoadingProxies()// it helps to us to return Comments with Posts. For this purpose we need to install Proxies package
+		.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
 
 builder.Services.AddDbContext<DatabaseContext>(configureDbContext);
 builder.Services.AddSingleton(new DatabaseContextFactory(configureDbContext));
@@ -48,7 +44,7 @@ dispatcher.RegisterHandler<FindPostByIdQuery>(queryHandler.HandleAsync);
 dispatcher.RegisterHandler<FindPostsByAuthorQuery>(queryHandler.HandleAsync);
 dispatcher.RegisterHandler<FindPostsWithCommentsQuery>(queryHandler.HandleAsync);
 dispatcher.RegisterHandler<FindPostsWithLikesQuery>(queryHandler.HandleAsync);
-builder.Services.AddSingleton<IQueryDispatcher>(_ => dispatcher);
+builder.Services.AddSingleton<IQueryDispatcher<PostEntity>>(_ => dispatcher);
 
 builder.Services.AddControllers();
 builder.Services.AddHostedService<ConsumerHostedService>();
@@ -59,8 +55,8 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 }
 
 
@@ -69,4 +65,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
