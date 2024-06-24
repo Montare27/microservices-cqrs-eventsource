@@ -68,14 +68,10 @@ public class PostAggregate : AggregateRoot
 	public void EditMessage(string message)
 	{
 		if (!_active)
-		{
 			throw new InvalidOperationException("You cannot edit the message of an inactive post!");
-		}
 
 		if (string.IsNullOrWhiteSpace(message))
-		{
 			throw new InvalidOperationException($"The value of {nameof(message)} cannot be null or empty. Please provide a valid {nameof(message)}!");
-		}
 		
 		RaiseEvent(new MessageUpdatedEvent{
 			Id = _id,
@@ -126,14 +122,10 @@ public class PostAggregate : AggregateRoot
 	public void AddComment(string comment, string username)
 	{
 		if (!_active)
-		{
 			throw new InvalidOperationException("You cannot add a comment to an inactive post!");
-		}
 		
 		if (string.IsNullOrWhiteSpace(comment))
-		{
 			throw new InvalidOperationException($"The value of {nameof(comment)} cannot be null or empty. Please provide a valid {nameof(comment)}!");
-		}
 		
 		RaiseEvent(new CommentAddedEvent{
 			Id = _id,
@@ -165,19 +157,13 @@ public class PostAggregate : AggregateRoot
 	public void EditComment(Guid commentId, string comment, string username)
 	{
 		if (!_active)
-		{
 			throw new InvalidOperationException("You cannot edit a comment to an inactive post!");
-		}
 
 		if (!_comments[commentId].Item2.Equals(username))
-		{
 			throw new InvalidOperationException($"You are not allowed to edit a comment that was made by another user!");
-		}
 		
 		if (string.IsNullOrWhiteSpace(comment))
-		{
 			throw new InvalidOperationException($"The value of {nameof(comment)} cannot be null or empty. Please provide a valid {nameof(comment)}!");
-		}
 		
 		RaiseEvent(new CommentUpdatedEvent{
 			Id = _id,
@@ -210,14 +196,10 @@ public class PostAggregate : AggregateRoot
 	public void RemoveComment(Guid commentId, string username)
 	{
 		if (!_active)
-		{
 			throw new InvalidOperationException("You cannot edit a comment to an inactive post!");
-		}
 
 		if (!_comments[commentId].Item2.Equals(username))
-		{
 			throw new InvalidOperationException($"You are not allowed to edit a comment that was made by another user!");
-		}
 		
 		RaiseEvent(new CommentRemovedEvent{
 			Id = _id,
@@ -245,14 +227,10 @@ public class PostAggregate : AggregateRoot
 	public void DeletePost(string username)
 	{
 		if (!_active)
-		{
 			throw new InvalidOperationException("You cannot edit a comment to an inactive post!");
-		}
 
 		if (!_author.Equals(username, StringComparison.CurrentCultureIgnoreCase))
-		{
 			throw new InvalidOperationException("You are not allowed to delete a post that was made by somebody else!");
-		}
 		
 		RaiseEvent(new PostRemovedEvent{
 			Id = _id

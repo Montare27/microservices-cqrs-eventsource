@@ -15,11 +15,15 @@ public abstract class AggregateRoot
 
 	public int Version { get; set; } = -1;  // 0 is the first version
 
-	public IEnumerable<BaseEvent> GetUncommittedChanges() => 
-		_changes;
+	/// <summary>
+	/// This method is being running only when we save changes to the event store
+	/// These changes we store during RaiseEvent, i.e. during every RaiseEvent and ReplayEvents
+	/// Right after execution we clear _changes
+	/// </summary>
+	/// <returns></returns>
+	public IEnumerable<BaseEvent> GetUncommittedChanges() => _changes;
 
-	public void MarkChangesAsCommitted() => 
-		_changes.Clear();
+	public void MarkChangesAsCommitted() => _changes.Clear();
 
 	/// <summary>
 	/// Applies incoming change.
@@ -34,16 +38,12 @@ public abstract class AggregateRoot
 		var method = this.GetType().GetMethod("Apply", [ @event.GetType() ]);
 
 		if (method is null)
-		{
 			throw new ArgumentNullException(nameof(method), $"The Apply method was not found in the aggregate for {@event.GetType().Name}");
-		}
 
 		method.Invoke(this, [@event]);
 
 		if (isNew)
-		{
 			_changes.Add(@event);
-		}
 	}
 
 	/// <summary>
@@ -56,6 +56,8 @@ public abstract class AggregateRoot
 	/// <summary>
 	/// Replays all the events to recreate the latest state of the aggregate
 	/// before new uncommitted changes will be applied
+	///
+	/// It is being running only while fetching Aggregate from EventSourcingHandler
 	/// </summary>
 	/// <param name="events"></param>
 	public void ReplayEvents(IEnumerable<BaseEvent> events)

@@ -1,8 +1,11 @@
 using Confluent.Kafka;
 using CQRS.Core.Consumers;
+using CQRS.Core.Events;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson.Serialization;
 using Post.Common.Events.Comment;
+using Post.Common.Events.Post;
 using Post.Query.Domain.Repositories;
 using Post.Query.Infrastructure.Consumers;
 using Post.Query.Infrastructure.DataAccess;

@@ -8,5 +8,5 @@ using CQRS.Core.Commands;
 /// <seealso cref="BaseCommand"/>
 public class LikePostCommand : BaseCommand
 {
-	
+	public LikePostCommand(Guid id) => Id = id;
 }

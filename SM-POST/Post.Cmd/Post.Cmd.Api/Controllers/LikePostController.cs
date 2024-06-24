@@ -9,27 +9,26 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class EditMessageController(
-	ILogger<EditMessageController> logger,
+public class LikePostController(
+	ILogger<LikePostController> logger,
 	ICommandDispatcher commandDispatcher
 ) : ControllerBase
 {
 	[HttpPut("{id::guid}")]
-	public async Task<ActionResult> EditMessageAsync(Guid id, EditMessageCommand command)
+	public async Task<ActionResult> LikePostAsync(Guid id)
 	{
-		command.Id = id;
 		try
 		{
-			await commandDispatcher.SendAsync(command);
+			await commandDispatcher.SendAsync(new LikePostCommand(id));
 			return Ok(
-				new BaseResponse("The edit message request completed successfully!")
+				new BaseResponse("Like post request completed successfully!")
 			);
 		}
 		catch (InvalidOperationException e)// validation error
 		{
 			logger.LogWarning(e, "Client made a bad request!");
 			return BadRequest(
-				new BaseResponse(e.Message)
+			new BaseResponse(e.Message)
 			);
 		}
 		catch (AggregateNotFoundException e)
@@ -41,10 +40,10 @@ public class EditMessageController(
 		}
 		catch (Exception e) 
 		{
-			const string SAFE_ERROR_MESSAGE = "Error while processing request to edit message!";
+			const string SAFE_ERROR_MESSAGE = "Error while processing request to like message!";
 			logger.LogError(e, SAFE_ERROR_MESSAGE);
 			return BadRequest( 
-				new NewPostResponse(command.Id, SAFE_ERROR_MESSAGE)
+			new NewPostResponse(id, SAFE_ERROR_MESSAGE)
 			);
 		}
 	}
