@@ -15,10 +15,20 @@ using EventHandler=Post.Query.Infrastructure.Handlers.EventHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Action<DbContextOptionsBuilder> configureDbContext = o =>
-	o.UseLazyLoadingProxies()// it helps to us to return Comments with Posts. For this purpose we need to install Proxies package
-		.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
 
+var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")!;
+
+Action<DbContextOptionsBuilder> configureDbContext = env switch{
+ 
+ "Development.PostgreSQL" => o => o.UseLazyLoadingProxies()
+  .UseNpgsql(builder.Configuration.GetConnectionString("SqlServer")),
+ 
+ // it helps to us to return Comments with Posts. For this purpose we need to install Proxies package
+ _ => o => o.UseLazyLoadingProxies()
+  .UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"))
+};
+
+// if(env.Equals("Development.PostgreSQL"))
 builder.Services.AddDbContext<DatabaseContext>(configureDbContext);
 builder.Services.AddSingleton(new DatabaseContextFactory(configureDbContext));
 
