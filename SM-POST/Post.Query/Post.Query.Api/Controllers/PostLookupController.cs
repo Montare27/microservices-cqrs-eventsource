@@ -99,7 +99,7 @@ public class PostLookupController(
 		int count = posts.Count;
 		return Ok(new PostLookupResponse(
 		posts,
-		$"Successfully returned {count} post {(count > 1 ? "s" : string.Empty)}")
+		$"Successfully returned {count} post{(count > 1 ? "s" : string.Empty)}")
 		);
 	}
 

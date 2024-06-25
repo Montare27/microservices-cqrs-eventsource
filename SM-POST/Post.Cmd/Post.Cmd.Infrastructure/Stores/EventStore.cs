@@ -6,6 +6,7 @@ using CQRS.Core.Exceptions;
 using CQRS.Core.Infrastructure;
 using CQRS.Core.Producers;
 using Domain.Aggregates;
+using MongoDB.Driver.Linq;
 
 public class EventStore(IEventStoreRepository eventStoreRepository, IEventProducer eventProducer) : IEventStore
 {
@@ -33,6 +34,7 @@ public class EventStore(IEventStoreRepository eventStoreRepository, IEventProduc
 				EventType = eventType,
 				EventData = @event
 			};
+			
 			@event.Version = version;
 
 			await eventStoreRepository.SaveAsync(eventModel);
@@ -53,6 +55,18 @@ public class EventStore(IEventStoreRepository eventStoreRepository, IEventProduc
 
 		return eventStream.OrderBy(x => x.Version)
 			.Select(x => x.EventData)
+			.ToList();
+	}
+
+	public async Task<List<Guid>> GetAggregateIdsAsync()
+	{
+		List<EventModel> eventStream = await eventStoreRepository.FindAllAsync();
+		
+		if (eventStream.Count == 0) return[];
+		
+		return eventStream
+			.Select(x => x.AggregateIdentifier)
+			.Distinct()
 			.ToList();
 	}
 }
