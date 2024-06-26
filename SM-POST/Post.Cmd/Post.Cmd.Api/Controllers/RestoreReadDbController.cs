@@ -21,7 +21,8 @@ public class RestoreReadDbController(
 		try
 		{
 			await commandDispatcher.SendAsync(new RestoreReadDbCommand());
-			return Ok(
+			return StatusCode(
+				StatusCodes.Status201Created, 
 				new BaseResponse("Restore read db request completed successfully!")
 			);
 		}
