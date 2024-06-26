@@ -3,7 +3,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-[Table("Post")]// This is a table in the database
+[Table("Post", Schema = "dbo")]// This is a table in the database
 public class PostEntity
 {
 	[Key]

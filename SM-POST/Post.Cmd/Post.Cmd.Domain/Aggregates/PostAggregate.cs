@@ -50,7 +50,7 @@ public class PostAggregate : AggregateRoot
 	/// <summary>
 	///     Gets or sets the value of the active
 	/// </summary>
-	public bool Active { get; set; }
+	public bool Active { get => _active; set => _active = value; }
 
 	/// <summary>
 	///     Applies an event, assigns new values to this class
@@ -219,7 +219,7 @@ public class PostAggregate : AggregateRoot
 	{
 		if (!_active)
 		{
-			throw new InvalidOperationException("You cannot edit a comment to an inactive post!");
+			throw new InvalidOperationException("You cannot remove a comment from an inactive post!");
 		}
 
 		if (!_comments[commentId].Item2.Equals(username))
@@ -254,7 +254,7 @@ public class PostAggregate : AggregateRoot
 	{
 		if (!_active)
 		{
-			throw new InvalidOperationException("You cannot edit a comment to an inactive post!");
+			throw new InvalidOperationException("The post has been already removed!");
 		}
 
 		if (!_author.Equals(username, StringComparison.CurrentCultureIgnoreCase))

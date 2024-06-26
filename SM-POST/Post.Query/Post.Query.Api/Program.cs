@@ -18,24 +18,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")!;
 
-Action<DbContextOptionsBuilder> configureDbContext = env switch{
- 
- "Development.PostgreSQL" => o => o.UseLazyLoadingProxies()
-  .UseNpgsql(builder.Configuration.GetConnectionString("SqlServer")),
- 
- // it helps to us to return Comments with Posts. For this purpose we need to install Proxies package
- _ => o => o.UseLazyLoadingProxies()
-  .UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"))
-};
+Action<DbContextOptionsBuilder> configureDbContext;
+if (env.Equals("Development.PostgreSQL"))
+{
+ configureDbContext = o => o.UseLazyLoadingProxies()
+  .UseNpgsql(builder.Configuration.GetConnectionString("SqlServer"));
+}
+else
+{
+ configureDbContext = o => 
+  o.UseLazyLoadingProxies()
+  .UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
+}
 
 // if(env.Equals("Development.PostgreSQL"))
 builder.Services.AddDbContext<DatabaseContext>(configureDbContext);
 builder.Services.AddSingleton(new DatabaseContextFactory(configureDbContext));
 
 // Create database and tables from code
- #pragma warning disable ASP0000
 var dataContext = builder.Services.BuildServiceProvider().GetRequiredService<DatabaseContext>();
- #pragma warning restore ASP0000
 dataContext.Database.EnsureCreated();
 
 builder.Services.AddScoped<IPostRepository, PostRepository>();

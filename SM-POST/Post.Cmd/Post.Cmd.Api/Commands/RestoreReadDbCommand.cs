@@ -2,7 +2,4 @@
 
 using CQRS.Core.Commands;
 
-public class RestoreReadDbCommand : BaseCommand
-{
-	
-}
+public class RestoreReadDbCommand : BaseCommand;
