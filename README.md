@@ -1,6 +1,6 @@
 ## Microservices in .NET
 
-![alt text](image.png)
+![alt text](images/schema.png)
 
 This repository showcases the implementation of a social media post management system with clear separation of Command (Write) and Query (Read) responsibilities, following best practices in distributed system design. The architecture incorporates the following component.
 
